@@ -1,0 +1,18 @@
+﻿@using System.Web.Mvc.Html
+@model DTO.MetaDTO
+
+<div class="box-body">
+    <div class="form-group">
+        <label >MetaContent</label>
+        @Html.TextBoxFor(m => m.MetaContent, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MetaContent)
+    </div>
+    <div class="form-group">
+        <label >MetaName</label>
+        @Html.DropDownList("Name", new SelectList(new[] { "Keywords", "Description", "Author" }), new { @class = "form-control select2" })
+    </div>
+    <input type="number" name="MetaID" value="@Model.MetaID" hidden/>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using BLL;
+using DTO;
+
+namespace UI.Areas.Admin.Controllers
+{
+    public class VideoController : Controller
+    {
+        VideoBLL bll = new VideoBLL();
+        
+        public ActionResult VideoList()
+        {
+            List<VideoDTO> dtolist = bll.GetVideos();
+            return View(dtolist);
+        }
+        // GET
+        public ActionResult AddVideo()
+        {
+            VideoDTO dto = new VideoDTO();
+            return View(dto);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddVideo(VideoDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = model.OriginalVideoPath.Substring(32);
+                string mergelink = "https://www.youtube.com/embed/" + path;
+                model.VideoPath =
+                    String.Format(
+                        @"<iframe width = ""300"" height = ""200"" src = ""{0}"" frameborder = ""0""  allowfullscreen ></iframe> ",
+                        mergelink);
+                if (bll.AddVideo(model))
+                {
+                    ViewBag.ProcessState = General.Messages.AddSuccess;
+                    ModelState.Clear();
+                    model = new VideoDTO();
+                } else
+                {
+                    ViewBag.ProcessState = General.Messages.GeneralError;
+                }
+            }
+            else
+            {
+                ViewBag.ProcessState = General.Messages.EmptyArea;
+            }
+
+            return View(model);
+        }
+        public ActionResult UpdateVideo(int id)
+        {
+            VideoDTO dto = bll.GetVideoWithID(id);
+            return View(dto);
+        }
+        
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateVideo(VideoDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = model.OriginalVideoPath.Substring(32);
+                string mergelink = "https://www.youtube.com/embed/" + path;
+                model.VideoPath =
+                    String.Format(
+                        @"<iframe width = ""300"" height = ""200"" src = ""{0}"" frameborder = ""0""  allowfullscreen ></iframe> ",
+                        mergelink);
+                if (bll.UpdateVideo(model))
+                {
+                    ViewBag.ProcessState = General.Messages.UpdateSuccess;
+                    ModelState.Clear();
+                    model = new VideoDTO();
+                }
+                else
+                {
+                    ViewBag.ProcessState = General.Messages.GeneralError;
+                }
+            }
+            else
+            {
+                ViewBag.ProcessState = General.Messages.EmptyArea;
+            }
+
+            return View(model);
+        }
+    }
+}
