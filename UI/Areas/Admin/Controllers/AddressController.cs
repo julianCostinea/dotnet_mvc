@@ -9,6 +9,7 @@ namespace UI.Areas.Admin.Controllers
     public class AddressController : Controller
     {
         AddressBLL bll = new AddressBLL();
+
         // GET
         public ActionResult AddressList()
         {
@@ -16,12 +17,13 @@ namespace UI.Areas.Admin.Controllers
             list = bll.GetAddresses();
             return View(list);
         }
+
         public ActionResult AddAddress()
         {
             AddressDTO dto = new AddressDTO();
             return View(dto);
         }
-        
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult AddAddress(AddressDTO model)
@@ -43,15 +45,18 @@ namespace UI.Areas.Admin.Controllers
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
             }
+
             return View(model);
         }
+
         public ActionResult UpdateAddress(int id)
         {
             List<AddressDTO> list = new List<AddressDTO>();
             list = bll.GetAddresses();
-            AddressDTO dto = list.FirstOrDefault(x=>x.ID==id);
+            AddressDTO dto = list.FirstOrDefault(x => x.ID == id);
             return View(dto);
         }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult UpdateAddress(AddressDTO model)
@@ -71,8 +76,14 @@ namespace UI.Areas.Admin.Controllers
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
             }
+
             return View(model);
         }
+
+        public JsonResult DeleteAddress(int id)
+        {
+            bll.DeleteAddress(id);
+            return Json("");
+        }
     }
-    
 }

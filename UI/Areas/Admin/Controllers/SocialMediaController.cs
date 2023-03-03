@@ -116,5 +116,16 @@ namespace UI.Areas.Admin.Controllers
 
             return View(model);
         }
+        
+        public JsonResult DeleteSocialMedia(int id)
+        {
+            string oldImagePath = bll.DeleteSocialMedia(id);
+            string path = Server.MapPath("~/Areas/Admin/Content/SocialMediaImages/" + oldImagePath);
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+            return Json("");
+        }
     }
 }

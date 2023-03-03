@@ -62,5 +62,23 @@ namespace DAL
                 throw;
             }
         }
+
+        public void DeleteAddress(int id)
+        {
+            try
+            {
+                Address ads = db.Addresses.FirstOrDefault(x => x.ID == id);
+                ads.isDeleted = true;
+                ads.DeletedDate = DateTime.Now;
+                ads.LastUpdateDate = DateTime.Now;
+                ads.LastUpdateUserID = UserStatic.UserID;
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

@@ -53,7 +53,7 @@
                         <td align="center" valign="middle">
                             <a href="#">
                                 <br />
-                                <img src="~/Areas/Admin/Content/icons/delete.png" />
+                                <img src="~/Areas/Admin/Content/icons/delete.png" onclick="AskQuestion('/Admin/Meta/DeleteMeta/',@item.MetaID)"/>
                             </a>
                         </td>
 
@@ -73,7 +73,7 @@
             </tfoot>
         </table>
     </div>
-    @* @Html.Partial("~/Areas/Admin/Views/Shared/ModalMessage.cshtml") *@
+    @Html.Partial("~/Areas/Admin/Views/Shared/ModalMessage.cshtml")
     <!-- /.card-body -->
 </div>
 <script src="~/Areas/Admin/Content/JS/DeleteRecord.js"></script>

@@ -134,6 +134,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\AdsImage\443557e5-bd0b-430b-b4b8-e63beef18b75image1.png" />
+    <Content Include="Areas\Admin\Content\AdsImage\ae77d40a-fa0e-45ef-9958-6c709e7c09faimage1.png" />
     <Content Include="Areas\Admin\Content\CSS\adminlte.min.css" />
     <Content Include="Areas\Admin\Content\CSS\all.min.css" />
     <Content Include="Areas\Admin\Content\CSS\bootstrap-4.min.css" />
@@ -598,6 +600,7 @@
     <Content Include="Areas\Admin\Content\JS\ckeditor\vendor\promise.js" />
     <Content Include="Areas\Admin\Content\JS\dataTables.bootstrap4.min.js" />
     <Content Include="Areas\Admin\Content\JS\dataTables.responsive.min.js" />
+    <Content Include="Areas\Admin\Content\JS\DeleteRecord.js" />
     <Content Include="Areas\Admin\Content\JS\demo.js" />
     <Content Include="Areas\Admin\Content\JS\jquery.dataTables.min.js" />
     <Content Include="Areas\Admin\Content\JS\jquery.min.js" />
@@ -699,7 +702,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Content\AdsImage" />
     <Folder Include="Areas\Admin\Content\FavImage" />
     <Folder Include="Areas\Admin\Content\PostImage" />
     <Folder Include="Areas\Admin\Content\SocialMediaImages\" />

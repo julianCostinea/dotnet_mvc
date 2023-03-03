@@ -70,5 +70,25 @@ namespace DAL
                 throw;
             }
         }
+
+        public string DeleteSocialMedia(int id)
+        {
+            try
+            {
+                SocialMedia social = db.SocialMedias.FirstOrDefault(x => x.ID == id);
+                string oldImagePath = social.ImagePath;
+                social.isDeleted = true;
+                social.DeletedDate = DateTime.Now;
+                social.LastUpdateUserID = UserStatic.UserID;
+                social.LastUpdateDate = DateTime.Now;
+                db.SaveChanges();
+                return oldImagePath;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

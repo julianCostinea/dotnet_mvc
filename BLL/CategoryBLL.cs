@@ -42,5 +42,22 @@ namespace BLL
         {
             return CategoryDAO.GetCategoriesForDropdown();
         }
+        PostBLL postbll = new PostBLL();
+        public List<PostImageDTO> DeleteCategory(int id)
+        {
+            List<Post> postlist = dao.DeleteCategory(id);
+            LogDAO.AddLog(General.ProcessType.CategoryDelete, General.TableName.Category, id);
+            List<PostImageDTO> imagelist = new List<PostImageDTO>();
+            foreach (var post in postlist)
+            {
+                List<PostImageDTO> imagelist2 = postbll.DeletePost(post.ID);
+                LogDAO.AddLog(General.ProcessType.PostDelete, General.TableName.Post, post.ID);
+                foreach (var image in imagelist2)
+                {
+                    imagelist.Add(image);
+                }
+            }
+            return imagelist;
+        }
     }
 }

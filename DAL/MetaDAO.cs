@@ -64,5 +64,23 @@ namespace DAL
                 throw;
             }
         }
+
+        public void DeleteMeta(int id)
+        {
+            try
+            {
+                Meta meta = db.Metas.FirstOrDefault(x => x.ID == id);
+                meta.isDeleted = true;
+                meta.DeletedDate = DateTime.Now;
+                meta.LastUpdateDate = DateTime.Now;
+                meta.LastUpdateUserID = UserStatic.UserID;
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

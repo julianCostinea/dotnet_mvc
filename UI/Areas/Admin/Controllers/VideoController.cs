@@ -9,12 +9,13 @@ namespace UI.Areas.Admin.Controllers
     public class VideoController : Controller
     {
         VideoBLL bll = new VideoBLL();
-        
+
         public ActionResult VideoList()
         {
             List<VideoDTO> dtolist = bll.GetVideos();
             return View(dtolist);
         }
+
         // GET
         public ActionResult AddVideo()
         {
@@ -39,7 +40,8 @@ namespace UI.Areas.Admin.Controllers
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
                     model = new VideoDTO();
-                } else
+                }
+                else
                 {
                     ViewBag.ProcessState = General.Messages.GeneralError;
                 }
@@ -51,12 +53,13 @@ namespace UI.Areas.Admin.Controllers
 
             return View(model);
         }
+
         public ActionResult UpdateVideo(int id)
         {
             VideoDTO dto = bll.GetVideoWithID(id);
             return View(dto);
         }
-        
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult UpdateVideo(VideoDTO model)
@@ -86,6 +89,12 @@ namespace UI.Areas.Admin.Controllers
             }
 
             return View(model);
+        }
+
+        public JsonResult DeleteVideo(int id)
+        {
+            bll.DeleteVideo(id);
+            return Json("");
         }
     }
 }

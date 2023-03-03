@@ -68,5 +68,15 @@ namespace DAL
                 throw;
             }
         }
+
+        public void DeleteVideo(int id)
+        {
+            Video video = db.Videos.FirstOrDefault(x => x.ID == id);
+            video.isDeleted = true;
+            video.DeletedDate = DateTime.Now;
+            video.LastUpdateUserID = UserStatic.UserID;
+            video.LastUpdateDate = DateTime.Now;
+            db.SaveChanges();
+        }
     }
 }

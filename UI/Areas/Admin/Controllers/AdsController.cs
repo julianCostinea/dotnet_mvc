@@ -110,5 +110,16 @@ namespace UI.Areas.Admin.Controllers
 
             return View(model);
         }
+
+        public JsonResult DeleteAds(int ID)
+        {
+            string imagePath = bll.DeleteAds(ID);
+            string oldPath = Server.MapPath("~/Areas/Admin/Content/AdsImage/" + imagePath);
+            if (System.IO.File.Exists(oldPath))
+            {
+                System.IO.File.Delete(oldPath);
+            }
+            return Json("");
+        }
     }
 }

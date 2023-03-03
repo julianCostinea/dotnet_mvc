@@ -39,5 +39,11 @@ namespace BLL
             LogDAO.AddLog(General.ProcessType.VideoUpdate, General.TableName.Video, model.ID);
             return true;
         }
+
+        public void DeleteVideo(int id)
+        {
+            dao.DeleteVideo(id);
+            LogDAO.AddLog(General.ProcessType.VideoDelete, General.TableName.Video, id);
+        }
     }
 }

@@ -152,5 +152,30 @@ namespace UI.Areas.Admin.Controllers
             model.isUpdate = true;
             return View(model);
         }
+        
+        public JsonResult DeletePostImage(int id)
+        {
+            string imagePath = bll.DeletePostImage(id);
+            string oldPath = Server.MapPath("~/Areas/Admin/Content/PostImage/" + imagePath);
+            if (System.IO.File.Exists(oldPath))
+            {
+                System.IO.File.Delete(oldPath);
+            }
+            return Json("");
+        }
+        
+        public JsonResult DeletePost(int id)
+        {
+            List<PostImageDTO> imagelist =  bll.DeletePost(id);
+            foreach (var item in imagelist)
+            {
+                string oldPath = Server.MapPath("~/Areas/Admin/Content/PostImage/" + item.ImagePath);
+                if (System.IO.File.Exists(oldPath))
+                {
+                    System.IO.File.Delete(oldPath);
+                }
+            }
+            return Json("");
+        }
     }
 }

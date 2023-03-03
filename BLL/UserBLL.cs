@@ -24,6 +24,7 @@ namespace BLL
             user.ImagePath = model.Imagepath;
             user.NameSurname = model.Name;
             user.isAdmin = model.isAdmin;
+            user.isDeleted = false;
             user.AddDate = DateTime.Now;
             user.LastUpdateDate = DateTime.Now;
             user.LastUpdateUserID = UserStatic.UserID;
@@ -45,6 +46,13 @@ namespace BLL
         {
             string oldImagePath = userdao.UpdateUser(model);
             LogDAO.AddLog(General.ProcessType.UserUpdate, General.TableName.User, model.ID);
+            return oldImagePath;
+        }
+
+        public string DeleteUser(int id)
+        {
+            string oldImagePath = userdao.DeleteUser(id);
+            LogDAO.AddLog(General.ProcessType.UserDelete, General.TableName.User, id);
             return oldImagePath;
         }
     }

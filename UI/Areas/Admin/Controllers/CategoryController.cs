@@ -15,6 +15,7 @@ namespace UI.Areas.Admin.Controllers
             List<CategoryDTO> dtoList = bll.GetCategories();
             return View(dtoList);
         }
+
         public ActionResult AddCategory()
         {
             CategoryDTO dto = new CategoryDTO();
@@ -40,12 +41,13 @@ namespace UI.Areas.Admin.Controllers
 
             return View(dto);
         }
+
         public ActionResult UpdateCategory(int id)
         {
             CategoryDTO dto = bll.GetCategoryWithID(id);
             return View(dto);
         }
-        
+
         [HttpPost]
         public ActionResult UpdateCategory(CategoryDTO dto)
         {
@@ -64,6 +66,20 @@ namespace UI.Areas.Admin.Controllers
             }
 
             return View(dto);
+        }
+
+        public JsonResult DeleteCategory(int id)
+        {
+            List<PostImageDTO> postimagelist = bll.DeleteCategory(id);
+            foreach (var item in postimagelist)
+            {
+                string oldPath = Server.MapPath("~/Areas/Admin/Content/PostImage/" + item.ImagePath);
+                if (System.IO.File.Exists(oldPath))
+                {
+                    System.IO.File.Delete(oldPath);
+                }
+            }
+            return Json("");
         }
     }
 }

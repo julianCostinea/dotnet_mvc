@@ -42,5 +42,11 @@ namespace BLL
             LogDAO.AddLog(General.ProcessType.MetaUpdate, General.TableName.Meta, model.MetaID);
             return true;
         }
+
+        public void DeleteMeta(int id)
+        {
+            dao.DeleteMeta(id);
+            LogDAO.AddLog(General.ProcessType.MetaDelete, General.TableName.Meta, id);
+        }
     }
 }

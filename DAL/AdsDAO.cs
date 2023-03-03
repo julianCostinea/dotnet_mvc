@@ -73,5 +73,24 @@ namespace DAL
                 throw;
             }
         }
+
+        public string DeleteAds(int id)
+        {
+            try
+            {
+                Ad ads = db.Ads.FirstOrDefault(x => x.ID == id);
+                string oldImagePath = ads.ImagePath;
+                ads.isDeleted = true;
+                ads.LastUpdateDate = DateTime.Now;
+                ads.LastUpdateUserID = UserStatic.UserID;
+                db.SaveChanges();
+                return oldImagePath;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

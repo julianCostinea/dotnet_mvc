@@ -8,16 +8,19 @@ namespace UI.Areas.Admin.Controllers
     public class MetaController : Controller
     {
         MetaBLL bll = new MetaBLL();
+
         // GET
         public ActionResult Index()
         {
             return View();
         }
+
         public ActionResult AddMeta()
         {
             MetaDTO dto = new MetaDTO();
             return View(dto);
         }
+
         [HttpPost]
         public ActionResult AddMeta(MetaDTO model)
         {
@@ -37,6 +40,7 @@ namespace UI.Areas.Admin.Controllers
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
             }
+
             MetaDTO newModel = new MetaDTO();
             return View(newModel);
         }
@@ -47,14 +51,14 @@ namespace UI.Areas.Admin.Controllers
             model = bll.GetMetaData();
             return View(model);
         }
-        
+
         public ActionResult UpdateMeta(int ID)
         {
             MetaDTO model = new MetaDTO();
             model = bll.GetMetaWithID(ID);
             return View(model);
         }
-        
+
         [HttpPost]
         public ActionResult UpdateMeta(MetaDTO model)
         {
@@ -74,8 +78,15 @@ namespace UI.Areas.Admin.Controllers
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
             }
+
             MetaDTO newModel = new MetaDTO();
             return View(newModel);
+        }
+
+        public JsonResult DeleteMeta(int ID)
+        {
+            bll.DeleteMeta(ID);
+            return Json("");
         }
     }
 }
