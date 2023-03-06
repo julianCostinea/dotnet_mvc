@@ -9,7 +9,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         UserBLL bll = new UserBLL();
 

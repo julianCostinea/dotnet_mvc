@@ -14,7 +14,7 @@ namespace DAL
             log.ProcessType = ProcessType;
             log.ProcessID = ProcessID;
             log.ProcessCategoryType = TableName;
-            log.ProcessDate = DateTime.Now;
+            log.ProcessDate = DateTime.Now; 
             log.IPAddress = HttpContext.Current.Request.UserHostAddress;
             db.Log_Table.Add(log);
             db.SaveChanges();

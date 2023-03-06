@@ -8,7 +8,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class PostController : Controller
+    public class PostController : BaseController
     {
         PostBLL bll = new PostBLL();
 

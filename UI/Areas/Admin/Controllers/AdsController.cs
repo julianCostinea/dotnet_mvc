@@ -9,7 +9,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class AdsController : Controller
+    public class AdsController : BaseController
     {
         AdsBLL bll = new AdsBLL();
 

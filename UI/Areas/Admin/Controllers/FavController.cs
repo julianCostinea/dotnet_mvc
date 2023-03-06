@@ -8,7 +8,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class FavController : Controller
+    public class FavController : BaseController
     {
         FavBLL bll = new FavBLL();
 

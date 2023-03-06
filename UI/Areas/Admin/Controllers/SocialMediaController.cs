@@ -9,7 +9,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class SocialMediaController : Controller
+    public class SocialMediaController : BaseController
     {
         SocialMediaBLL bll = new SocialMediaBLL();
 

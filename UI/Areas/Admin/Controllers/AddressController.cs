@@ -6,7 +6,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class AddressController : Controller
+    public class AddressController : BaseController
     {
         AddressBLL bll = new AddressBLL();
 

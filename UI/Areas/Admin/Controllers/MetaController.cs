@@ -5,7 +5,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class MetaController : Controller
+    public class MetaController : BaseController
     {
         MetaBLL bll = new MetaBLL();
 

@@ -5,7 +5,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         CategoryBLL bll = new CategoryBLL();
 

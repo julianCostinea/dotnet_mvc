@@ -6,7 +6,7 @@ using DTO;
 
 namespace UI.Areas.Admin.Controllers
 {
-    public class VideoController : Controller
+    public class VideoController : BaseController
     {
         VideoBLL bll = new VideoBLL();
 
