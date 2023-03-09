@@ -65,6 +65,7 @@ namespace DAL
                 dto.AddDate = item.AddDate;
                 dtolist.Add(dto);
             }
+
             return dtolist;
         }
 
@@ -89,7 +90,7 @@ namespace DAL
 
         public List<PostImageDTO> GetPostImagesWithPostID(int id)
         {
-            List<PostImage> list = db.PostImages.Where(x => x.PostID == id && x.isDeleted == false ).ToList();
+            List<PostImage> list = db.PostImages.Where(x => x.PostID == id && x.isDeleted == false).ToList();
             List<PostImageDTO> dtolist = new List<PostImageDTO>();
             foreach (var item in list)
             {
@@ -98,6 +99,7 @@ namespace DAL
                 dto.ImagePath = item.ImagePath;
                 dtolist.Add(dto);
             }
+
             return dtolist;
         }
 
@@ -135,6 +137,7 @@ namespace DAL
                 item.LastUpdateUserID = UserStatic.UserID;
                 item.LastUpdateDate = DateTime.Now;
             }
+
             db.SaveChanges();
         }
 
@@ -178,7 +181,34 @@ namespace DAL
                 item.LastUpdateDate = DateTime.Now;
                 dtolist.Add(dto);
             }
+
             db.SaveChanges();
+            return dtolist;
+        }
+
+        public List<PostDTO> GetHotNews()
+        {
+            var postlist = (from p in db.Posts.Where(x => x.isDeleted == 0 && x.Area1 == true)
+                join c in db.Categories on p.CategoryID equals c.ID
+                select new PostDTO()
+                {
+                    ID = p.ID,
+                    Title = p.Title,
+                    CategoryName = c.CategoryName,
+                    AddDate = p.AddDate,
+                    SeoLink = p.SeoLink
+                }).Take(8).ToList();
+            List<PostDTO> dtolist = new List<PostDTO>();
+            foreach (var item in postlist)
+            {
+                PostDTO dto = new PostDTO();
+                dto.ID = item.ID;
+                dto.Title = item.Title;
+                dto.CategoryName = item.CategoryName;
+                dto.AddDate = item.AddDate;
+                dtolist.Add(dto);
+            }
+
             return dtolist;
         }
     }

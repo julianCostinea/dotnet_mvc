@@ -65,6 +65,8 @@
         <Compile Include="Class1.cs" />
         <Compile Include="FavBLL.cs" />
         <Compile Include="General.cs" />
+        <Compile Include="GeneralBLL.cs" />
+        <Compile Include="LayoutBLL.cs" />
         <Compile Include="LogBLL.cs" />
         <Compile Include="MetaBLL.cs" />
         <Compile Include="PostBLL.cs" />
