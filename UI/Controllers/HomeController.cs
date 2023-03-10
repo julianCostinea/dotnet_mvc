@@ -21,17 +21,21 @@ namespace UI.Controllers
             dto = bll.GetAllPosts();
             return View(dto);
         }
-
-        public ActionResult About()
+        
+        public ActionResult CategoryPostList(string CategoryName)
         {
-            ViewBag.Message = "Your application description page.";
+            HomeLayoutDTO layoutdto = new HomeLayoutDTO();
+            layoutdto = layoutbll.GetLayoutData();
+            ViewData["LayoutDTO"] = layoutdto;
             return View();
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-            return View();
+        public ActionResult PostDetail(int ID)
+        {HomeLayoutDTO layoutdto = new HomeLayoutDTO();
+            layoutdto = layoutbll.GetLayoutData();
+            ViewData["LayoutDTO"] = layoutdto;
+            GeneralDTO dto = new GeneralDTO();
+            dto = bll.GetPostDetail(ID);
+            return View(dto);
         }
     }
 }

@@ -18,5 +18,14 @@ namespace BLL
             dto.Adslist = adsdao.GetAds();
             return dto;
         }
+
+        public GeneralDTO GetPostDetail(int id)
+        {
+            GeneralDTO dto = new GeneralDTO();
+            dto.BreakingPost = dao.GetBreakingPosts();
+            dto.Adslist = adsdao.GetAds();
+            dto.PostDetail = dao.GetPostDetail(id);
+            return dto;
+        }
     }
 }

@@ -68,8 +68,8 @@
 
                                         <!-- Post Content -->
                                         <div class="post-content">
-                                            <a href="" class="post-cata cata-sm cata-success">@item.CategoryName</a>
-                                            <a href="" class="post-title">@item.Title</a>
+                                            <a href="@Url.RouteUrl("Category", new { @CategoryName = BLL.SeoLink.GenerateUrl(item.CategoryName) })" class="post-cata">@item.CategoryName</a>
+                                            <a href="@Url.RouteUrl("PostDetail", new { @ID = item.ID, @CategoryName = BLL.SeoLink.GenerateUrl(item.CategoryName), @SeoLink = item.SeoLink })" class="post-title">@item.Title</a>
                                             <div class="post-meta d-flex">
                                                 <a href="#">
                                                     <i class="fa fa-comments-o" aria-hidden="true"></i> @item.CommentCount

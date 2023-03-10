@@ -692,6 +692,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Home\CategoryPostList.cshtml" />
+    <Content Include="Views\Home\PostDetail.cshtml" />
     <Content Include="Views\Shared\HomeLayout.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

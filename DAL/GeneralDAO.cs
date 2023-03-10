@@ -34,6 +34,7 @@ namespace DAL
                 dto.AddDate = item.Adddate;
                 dtolist.Add(dto);
             }
+
             return dtolist;
         }
 
@@ -65,6 +66,7 @@ namespace DAL
                 dto.AddDate = item.Adddate;
                 dtolist.Add(dto);
             }
+
             return dtolist;
         }
 
@@ -96,6 +98,7 @@ namespace DAL
                 dto.AddDate = item.Adddate;
                 dtolist.Add(dto);
             }
+
             return dtolist;
         }
 
@@ -112,7 +115,7 @@ namespace DAL
                     seolink = p.SeoLink,
                     viewcount = p.ViewCount,
                     Adddate = p.AddDate,
-                }).OrderByDescending(x=>x.viewcount).Take(5).ToList();
+                }).OrderByDescending(x => x.viewcount).Take(5).ToList();
             foreach (var item in list)
             {
                 PostDTO dto = new PostDTO();
@@ -127,13 +130,15 @@ namespace DAL
                 dto.AddDate = item.Adddate;
                 dtolist.Add(dto);
             }
+
             return dtolist;
         }
 
         public List<VideoDTO> GetVideos()
         {
             List<VideoDTO> dtolist = new List<VideoDTO>();
-            List<Video> list = db.Videos.Where(x => x.isDeleted == false).OrderByDescending(x => x.AddDate).Take(5).ToList();
+            List<Video> list = db.Videos.Where(x => x.isDeleted == false).OrderByDescending(x => x.AddDate).Take(5)
+                .ToList();
             foreach (var item in list)
             {
                 VideoDTO dto = new VideoDTO();
@@ -143,7 +148,25 @@ namespace DAL
                 dto.AddDate = item.AddDate;
                 dtolist.Add(dto);
             }
+
             return dtolist;
+        }
+
+        public PostDTO GetPostDetail(int id)
+        {
+            Post post = db.Posts.FirstOrDefault(x => x.ID == id);
+            post.ViewCount++;
+            db.SaveChanges();
+            PostDTO dto = new PostDTO();
+            dto.ID = post.ID;
+            dto.Title = post.Title;
+            dto.ShortContent = post.ShortContent;
+            dto.PostContent = post.PostContent;
+            dto.Language = post.LanguageName;
+            dto.SeoLink = post.SeoLink;
+            dto.CategoryID = post.CategoryID;
+            dto.CategoryName = db.Categories.FirstOrDefault(x => x.ID == dto.CategoryID).CategoryName;
+            return dto;
         }
     }
 }
