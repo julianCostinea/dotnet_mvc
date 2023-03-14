@@ -121,6 +121,7 @@
     <Compile Include="Areas\Admin\Controllers\AdsController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
     <Compile Include="Areas\Admin\Controllers\FavController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MetaController.cs" />
@@ -637,6 +638,8 @@
     <Content Include="Areas\Admin\Views\Category\CategoryList.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Partial\CategoryForm.cshtml" />
     <Content Include="Areas\Admin\Views\Category\UpdateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Comment\AllComments.cshtml" />
+    <Content Include="Areas\Admin\Views\Comment\UnapprovedComments.cshtml" />
     <Content Include="Areas\Admin\Views\Fav\Partial\FavForm.cshtml" />
     <Content Include="Areas\Admin\Views\Fav\UpdateFav.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
@@ -673,6 +676,10 @@
     <Content Include="Content\css\classy-nav.css" />
     <Content Include="Content\js\jquery\jquery-2.2.4.min.js" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\toastr\toastr.css" />
+    <Content Include="Content\toastr\toastr.js.map" />
+    <Content Include="Content\toastr\toastr.min.css" />
+    <Content Include="Content\toastr\toastr.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

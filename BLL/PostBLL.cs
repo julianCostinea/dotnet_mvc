@@ -127,5 +127,39 @@ namespace BLL
             LogDAO.AddLog(General.ProcessType.PostDelete, General.TableName.Post, id);
             return imagelist;
         }
+
+        public bool AddComment(GeneralDTO model)
+        {
+            Comment comment = new Comment();
+            comment.PostID = model.PostID;
+            comment.NameSurname = model.Name;
+            comment.Email = model.Email;
+            comment.CommentContent = model.Message;
+            comment.AddDate = DateTime.Now;
+            dao.AddComment(comment);
+            return true;
+        }
+
+        public List<CommentDTO> GetComments()
+        {
+            return dao.GetComments();
+        }
+
+        public void ApproveComment(int id)
+        {
+            dao.ApproveComment(id);
+            LogDAO.AddLog(General.ProcessType.CommentApprove, General.TableName.Comment, id);
+        }
+
+        public void DeleteComment(int id)
+        {
+            dao.DeleteComment(id);
+            LogDAO.AddLog(General.ProcessType.CommentDelete, General.TableName.Comment, id);
+        }
+
+        public List<CommentDTO> GetAllComments()
+        {
+            return dao.GetAllComments();
+        }
     }
 }

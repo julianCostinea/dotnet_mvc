@@ -211,5 +211,96 @@ namespace DAL
 
             return dtolist;
         }
+
+        public void AddComment(Comment comment)
+        {
+            try
+            {
+                db.Comments.Add(comment);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public List<CommentDTO> GetComments()
+        {
+            List<CommentDTO> dtolist = new List<CommentDTO>();
+            var list = (from c in db.Comments.Where(x => x.isDeleted == false && x.isApproved == false)
+                join p in db.Posts on c.PostID equals p.ID
+                select new
+                {
+                    ID = c.ID,
+                    PostTitle = p.Title,
+                    Email = c.Email,
+                    Content = c.CommentContent,
+                    AddDate = c.AddDate
+                }).ToList();
+            foreach (var item in list)
+            {
+                CommentDTO dto = new CommentDTO();
+                dto.ID = item.ID;
+                dto.PostTitle = item.PostTitle;
+                dto.Email = item.Email;
+                dto.CommentContent = item.Content;
+                dto.AddDate = item.AddDate;
+                dtolist.Add(dto);
+            }
+
+            return dtolist;
+        }
+
+        public void ApproveComment(int id)
+        {
+            Comment cmt = db.Comments.FirstOrDefault(x => x.ID == id);
+            cmt.isApproved = true;
+            cmt.LastUpdateUserID = UserStatic.UserID;
+            cmt.LastUpdateDate = DateTime.Now;
+            cmt.ApproveDate = DateTime.Now;
+            cmt.ApproveUserID = UserStatic.UserID;
+            db.SaveChanges();
+        }
+
+        public void DeleteComment(int id)
+        {
+            Comment cmt = db.Comments.FirstOrDefault(x => x.ID == id);
+            cmt.isDeleted = true;
+            cmt.DeletedDate = DateTime.Now;
+            cmt.LastUpdateUserID = UserStatic.UserID;
+            cmt.LastUpdateDate = DateTime.Now;
+            db.SaveChanges();
+        }
+
+        public List<CommentDTO> GetAllComments()
+        {
+            List<CommentDTO> dtolist = new List<CommentDTO>();
+            var list = (from c in db.Comments.Where(x => x.isDeleted == false)
+                join p in db.Posts on c.PostID equals p.ID
+                select new
+                {
+                    ID = c.ID,
+                    PostTitle = p.Title,
+                    Email = c.Email,
+                    Content = c.CommentContent,
+                    AddDate = c.AddDate,
+                    isapproved = c.isApproved
+                }).ToList();
+            foreach (var item in list)
+            {
+                CommentDTO dto = new CommentDTO();
+                dto.ID = item.ID;
+                dto.PostTitle = item.PostTitle;
+                dto.Email = item.Email;
+                dto.CommentContent = item.Content;
+                dto.AddDate = item.AddDate;
+                dto.isApproved = item.isapproved;
+                dtolist.Add(dto);
+            }
+
+            return dtolist;
+        }
     }
 }

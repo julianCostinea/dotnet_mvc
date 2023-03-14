@@ -11,5 +11,11 @@ namespace DTO
         public List<VideoDTO> Videos { get; set; }
         public List<AdsDTO> Adslist { get; set; }
         public PostDTO PostDetail { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
+        public int PostID { get; set; }
+        public List<PostDTO> CategoryPostList { get; set; }
+        public string CategoryName { get; set; }
     }
 }

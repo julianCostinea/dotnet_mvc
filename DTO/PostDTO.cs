@@ -40,5 +40,6 @@ namespace DTO
         public bool isUpdate { get; set; } = false;
         public string ImagePath { get; set; }
         public int CommentCount { get; set; }
+        public List<CommentDTO> CommentList { get; set; }
     }
 }
