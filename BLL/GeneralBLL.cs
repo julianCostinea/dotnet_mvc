@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DAL;
 using DTO;
 
@@ -55,6 +56,16 @@ namespace BLL
                 }
                 dto.CategoryPostList = dao.GetCategoryPostList(categoryID);
             }
+            return dto;
+        }
+
+        AddressDAO addressdao = new AddressDAO();
+        public GeneralDTO GetContactPageItems()
+        {
+            GeneralDTO dto = new GeneralDTO();
+            dto.BreakingPost = dao.GetBreakingPosts();
+            dto.Adslist = adsdao.GetAds();
+            dto.Address = addressdao.GetAddresses().FirstOrDefault();
             return dto;
         }
     }

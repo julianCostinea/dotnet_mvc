@@ -122,6 +122,7 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\FavController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MetaController.cs" />
@@ -640,6 +641,8 @@
     <Content Include="Areas\Admin\Views\Category\UpdateCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Comment\AllComments.cshtml" />
     <Content Include="Areas\Admin\Views\Comment\UnapprovedComments.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\AllMessages.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\UnreadMessages.cshtml" />
     <Content Include="Areas\Admin\Views\Fav\Partial\FavForm.cshtml" />
     <Content Include="Areas\Admin\Views\Fav\UpdateFav.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
@@ -700,6 +703,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Home\CategoryPostList.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\PostDetail.cshtml" />
     <Content Include="Views\Shared\HomeLayout.cshtml" />
     <Content Include="Web.config" />
