@@ -161,5 +161,18 @@ namespace BLL
         {
             return dao.GetAllComments();
         }
+
+        public CountDTO GetCounts()
+        {
+            CountDTO dto = new CountDTO();
+            dto.MessageCount = dao.GetMessageCount();
+            dto.CommentCount = dao.GetCommentCount();
+            return dto;
+        }
+
+        public CountDTO GetALlCounts()
+        {
+            return dao.GetALlCounts();
+        }
     }
 }

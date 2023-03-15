@@ -20,6 +20,9 @@ namespace UI.Areas.Admin.Controllers
 
         public ActionResult PostList()
         {
+            CountDTO countdto = new CountDTO();
+            countdto = bll.GetALlCounts();
+            ViewData["AllCounts"] = countdto;
             List<PostDTO> postlist = new List<PostDTO>();
             postlist = bll.GetPosts();
             return View(postlist);
@@ -176,6 +179,13 @@ namespace UI.Areas.Admin.Controllers
                 }
             }
             return Json("");
+        }
+        
+        public JsonResult GetCounts()
+        {
+            CountDTO dto = new CountDTO();
+            dto = bll.GetCounts();
+            return Json(dto, JsonRequestBehavior.AllowGet);
         }
     }
 }

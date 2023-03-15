@@ -124,6 +124,7 @@
     <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\FavController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LogController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MetaController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
@@ -646,6 +647,7 @@
     <Content Include="Areas\Admin\Views\Fav\Partial\FavForm.cshtml" />
     <Content Include="Areas\Admin\Views\Fav\UpdateFav.cshtml" />
     <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Log\LogList.cshtml" />
     <Content Include="Areas\Admin\Views\Meta\AddMeta.cshtml" />
     <Content Include="Areas\Admin\Views\Meta\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Meta\MetaList.cshtml" />
@@ -705,6 +707,7 @@
     <Content Include="Views\Home\CategoryPostList.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\PostDetail.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Shared\HomeLayout.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

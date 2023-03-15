@@ -302,5 +302,25 @@ namespace DAL
 
             return dtolist;
         }
+
+        public int GetMessageCount()
+        {
+            return db.Contacts.Count(x => x.isDeleted == false && x.isRead == false);
+        }
+
+        public int GetCommentCount()
+        {
+            return db.Comments.Count(x => x.isDeleted == false && x.isApproved == false);
+        }
+
+        public CountDTO GetALlCounts()
+        {
+            CountDTO dto = new CountDTO();
+            dto.PostCount = db.Posts.Count(x => x.isDeleted == 0);
+            dto.CommentCount = db.Comments.Count(x => x.isDeleted == false);
+            dto.MessageCount = db.Contacts.Count(x => x.isDeleted == false);
+            dto.ViewCount = db.Posts.Where(x=>x.isDeleted==0).Sum(x => x.ViewCount);
+            return dto;
+        }
     }
 }
