@@ -29,6 +29,7 @@ namespace UI.Areas.Admin.Controllers
             }
             else if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 HttpPostedFileBase postedFile = model.SocialImage;
                 Bitmap SocialMedia = new Bitmap(postedFile.InputStream);
                 string ext = Path.GetExtension(postedFile.FileName);
@@ -40,7 +41,7 @@ namespace UI.Areas.Admin.Controllers
                     SocialMedia.Save(path);
                     model.ImagePath = fileName;
 
-                    if (bll.AddSocialMedia(model))
+                    if (bll.AddSocialMedia(model, session))
                     {
                         ViewBag.ProcessState = General.Messages.AddSuccess;
                         model = new SocialMediaDTO();
@@ -81,6 +82,7 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult UpdateSocialMedia(SocialMediaDTO model)
         {
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
             if (!ModelState.IsValid)
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
@@ -102,7 +104,7 @@ namespace UI.Areas.Admin.Controllers
                     }
                 }
 
-                string oldImagePath = bll.UpdateSocialMedia(model);
+                string oldImagePath = bll.UpdateSocialMedia(model, session);
                 if (model.SocialImage != null)
                 {
                     string path = Server.MapPath("~/Areas/Admin/Content/SocialMediaImages/" + oldImagePath);
@@ -119,7 +121,8 @@ namespace UI.Areas.Admin.Controllers
         
         public JsonResult DeleteSocialMedia(int id)
         {
-            string oldImagePath = bll.DeleteSocialMedia(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            string oldImagePath = bll.DeleteSocialMedia(id, session);
             string path = Server.MapPath("~/Areas/Admin/Content/SocialMediaImages/" + oldImagePath);
             if (System.IO.File.Exists(path))
             {

@@ -29,13 +29,14 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 string path = model.OriginalVideoPath.Substring(32);
                 string mergelink = "https://www.youtube.com/embed/" + path;
                 model.VideoPath =
                     String.Format(
                         @"<iframe width = ""300"" height = ""200"" src = ""{0}"" frameborder = ""0""  allowfullscreen ></iframe> ",
                         mergelink);
-                if (bll.AddVideo(model))
+                if (bll.AddVideo(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
@@ -66,13 +67,14 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 string path = model.OriginalVideoPath.Substring(32);
                 string mergelink = "https://www.youtube.com/embed/" + path;
                 model.VideoPath =
                     String.Format(
                         @"<iframe width = ""300"" height = ""200"" src = ""{0}"" frameborder = ""0""  allowfullscreen ></iframe> ",
                         mergelink);
-                if (bll.UpdateVideo(model))
+                if (bll.UpdateVideo(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.UpdateSuccess;
                     ModelState.Clear();
@@ -93,7 +95,8 @@ namespace UI.Areas.Admin.Controllers
 
         public JsonResult DeleteVideo(int id)
         {
-            bll.DeleteVideo(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            bll.DeleteVideo(id, session);
             return Json("");
         }
     }

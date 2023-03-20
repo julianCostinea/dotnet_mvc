@@ -1,5 +1,9 @@
 ﻿
 @model DTO.UserDTO
+@using DTO
+@{
+    SessionDTO session = (SessionDTO)Session["UserInfo"];
+}
     <div class="box-body">
         <div class="form-group">
             <label>User Name</label>
@@ -11,7 +15,7 @@
             @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @placeholder = "Password" })
             @Html.ValidationMessageFor(x => x.Password)
         </div>
-        @if (DTO.UserStatic.isAdmin)
+        @if (session.isAdmin)
         {
         <div class="form-check">
             <input type="checkbox" class="form-check-inline" name="isAdmin" checked="@Model.isAdmin" value="true">

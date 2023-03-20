@@ -23,6 +23,7 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult UpdateFav(FavDTO model)
         {
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
             if (!ModelState.IsValid)
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
@@ -68,8 +69,9 @@ namespace UI.Areas.Admin.Controllers
                         ViewBag.ProcessState = General.Messages.ExtensionError;
                     }
                 }
+
                 FavDTO returndto = new FavDTO();
-                returndto = bll.UpdateFav(model);
+                returndto = bll.UpdateFav(model, session);
                 if (model.FavImage != null)
                 {
                     if (System.IO.File.Exists(Server.MapPath("~/Areas/Admin/Content/FavImage/" + returndto.Fav)))
@@ -77,6 +79,7 @@ namespace UI.Areas.Admin.Controllers
                         System.IO.File.Delete(Server.MapPath("~/Areas/Admin/Content/FavImage/" + returndto.Fav));
                     }
                 }
+
                 if (model.LogoImage != null)
                 {
                     if (System.IO.File.Exists(Server.MapPath("~/Areas/Admin/Content/FavImage/" + returndto.Logo)))
@@ -84,6 +87,7 @@ namespace UI.Areas.Admin.Controllers
                         System.IO.File.Delete(Server.MapPath("~/Areas/Admin/Content/FavImage/" + returndto.Logo));
                     }
                 }
+
                 ViewBag.ProcessState = General.Messages.UpdateSuccess;
             }
 

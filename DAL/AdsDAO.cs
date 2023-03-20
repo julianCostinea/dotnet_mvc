@@ -5,91 +5,108 @@ using DTO;
 
 namespace DAL
 {
-    public class AdsDAO:PostContext
+    public class AdsDAO
     {
         public int AddAds(Ad ads)
         {
-            try
+            using (POSTDATAEntities db = new POSTDATAEntities())
             {
-                db.Ads.Add(ads);
-                db.SaveChanges();
-                return ads.ID;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                try
+                {
+                    db.Ads.Add(ads);
+                    db.SaveChanges();
+                    return ads.ID;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 
         public List<AdsDTO> GetAds()
         {
-            List<Ad>list = db.Ads.Where(x=>x.isDeleted==false).ToList();
-            List<AdsDTO> dtoList = new List<AdsDTO>();
-            foreach (var item in list)
+            using (POSTDATAEntities db = new POSTDATAEntities())
             {
-                AdsDTO dto = new AdsDTO();
-                dto.ID = item.ID;
-                dto.Name = item.Name;
-                dto.Link = item.Link;
-                dto.ImagePath = item.ImagePath;
-                dtoList.Add(dto);
+                List<Ad> list = db.Ads.Where(x => x.isDeleted == false).ToList();
+                List<AdsDTO> dtoList = new List<AdsDTO>();
+                foreach (var item in list)
+                {
+                    AdsDTO dto = new AdsDTO();
+                    dto.ID = item.ID;
+                    dto.Name = item.Name;
+                    dto.Link = item.Link;
+                    dto.ImagePath = item.ImagePath;
+                    dtoList.Add(dto);
+                }
+
+                return dtoList;
             }
-            return dtoList;
         }
 
         public AdsDTO GetAdsWithID(int id)
         {
-            Ad ads = db.Ads.FirstOrDefault(x => x.ID == id);
-            AdsDTO dto = new AdsDTO();
-            dto.ID = ads.ID;
-            dto.Name = ads.Name;
-            dto.Link = ads.Link;
-            dto.ImagePath = ads.ImagePath;
-            dto.Imagesize = ads.Size;
-            return dto;
-        }
-
-        public string UpdateAds(AdsDTO model)
-        {
-            try
-            {
-                Ad ads = db.Ads.FirstOrDefault(x => x.ID == model.ID);
-                string oldImagePath = ads.ImagePath;
-                ads.Name = model.Name;
-                ads.Link = model.Link;
-                if (model.ImagePath == null)
-                {
-                    ads.ImagePath = model.ImagePath;
-                }
-                ads.Size = model.Imagesize;
-                ads.LastUpdateDate = DateTime.Now;
-                ads.LastUpdateUserID = UserStatic.UserID;
-                db.SaveChanges();
-                return oldImagePath;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        public string DeleteAds(int id)
-        {
-            try
+            using (POSTDATAEntities db = new POSTDATAEntities())
             {
                 Ad ads = db.Ads.FirstOrDefault(x => x.ID == id);
-                string oldImagePath = ads.ImagePath;
-                ads.isDeleted = true;
-                ads.LastUpdateDate = DateTime.Now;
-                ads.LastUpdateUserID = UserStatic.UserID;
-                db.SaveChanges();
-                return oldImagePath;
+                AdsDTO dto = new AdsDTO();
+                dto.ID = ads.ID;
+                dto.Name = ads.Name;
+                dto.Link = ads.Link;
+                dto.ImagePath = ads.ImagePath;
+                dto.Imagesize = ads.Size;
+                return dto;
             }
-            catch (Exception e)
+        }
+
+        public string UpdateAds(AdsDTO model, SessionDTO session)
+        {
+            using (POSTDATAEntities db = new POSTDATAEntities())
             {
-                Console.WriteLine(e);
-                throw;
+                try
+                {
+                    Ad ads = db.Ads.FirstOrDefault(x => x.ID == model.ID);
+                    string oldImagePath = ads.ImagePath;
+                    ads.Name = model.Name;
+                    ads.Link = model.Link;
+                    if (model.ImagePath == null)
+                    {
+                        ads.ImagePath = model.ImagePath;
+                    }
+
+                    ads.Size = model.Imagesize;
+                    ads.LastUpdateDate = DateTime.Now;
+                    ads.LastUpdateUserID = session.UserID;
+                    db.SaveChanges();
+                    return oldImagePath;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+        }
+
+        public string DeleteAds(int id, SessionDTO session)
+        {
+            using (POSTDATAEntities db = new POSTDATAEntities())
+            {
+                try
+                {
+                    Ad ads = db.Ads.FirstOrDefault(x => x.ID == id);
+                    string oldImagePath = ads.ImagePath;
+                    ads.isDeleted = true;
+                    ads.LastUpdateDate = DateTime.Now;
+                    ads.LastUpdateUserID = session.UserID;
+                    db.SaveChanges();
+                    return oldImagePath;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
         }
     }

@@ -26,16 +26,16 @@ namespace BLL
             return dao.GetUnreadMessages();
         }
 
-        public void ReadMessage(int id)
+        public void ReadMessage(int id, SessionDTO session)
         {
-            dao.ReadMessage(id);
-            LogDAO.AddLog(General.ProcessType.ContactRead, General.TableName.Contact, id);
+            dao.ReadMessage(id, session);
+            LogDAO.AddLog(General.ProcessType.ContactRead, General.TableName.Contact, id, session);
         }
 
-        public void DeleteMessage(int id)
+        public void DeleteMessage(int id, SessionDTO session)
         {
-            dao.DeleteMessage(id);
-            LogDAO.AddLog(General.ProcessType.ContactDelete, General.TableName.Contact, id);
+            dao.DeleteMessage(id, session);
+            LogDAO.AddLog(General.ProcessType.ContactDelete, General.TableName.Contact, id, session);
         }
 
         public List<ContactDTO> GetAllMessages()

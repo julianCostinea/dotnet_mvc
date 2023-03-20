@@ -36,6 +36,7 @@ namespace UI.Areas.Admin.Controllers
             }
             else if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 HttpPostedFileBase postedFile = dto.AdsImage;
                 string fileName = "";
                 Bitmap AdsImage = new Bitmap(postedFile.InputStream);
@@ -47,7 +48,7 @@ namespace UI.Areas.Admin.Controllers
                     string path = Server.MapPath("~/Areas/Admin/Content/AdsImage/" + fileName);
                     resizedImage.Save(path);
                     dto.ImagePath = fileName;
-                    bll.AddAds(dto);
+                    bll.AddAds(dto, session);
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
                     dto = new AdsDTO();
@@ -74,6 +75,7 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult UpdateAds(AdsDTO model)
         {
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
             if (!ModelState.IsValid)
             {
                 ViewBag.ProcessState = General.Messages.EmptyArea;
@@ -96,7 +98,7 @@ namespace UI.Areas.Admin.Controllers
                     }
                 }
 
-                string oldImagePath = bll.UpdateAds(model);
+                string oldImagePath = bll.UpdateAds(model, session);
                 if (model.AdsImage != null)
                 {
                     string oldPath = Server.MapPath("~/Areas/Admin/Content/AdsImage/" + oldImagePath);
@@ -113,7 +115,8 @@ namespace UI.Areas.Admin.Controllers
 
         public JsonResult DeleteAds(int ID)
         {
-            string imagePath = bll.DeleteAds(ID);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            string imagePath = bll.DeleteAds(ID, session);
             string oldPath = Server.MapPath("~/Areas/Admin/Content/AdsImage/" + imagePath);
             if (System.IO.File.Exists(oldPath))
             {

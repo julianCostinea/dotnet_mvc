@@ -25,18 +25,21 @@ namespace UI.Areas.Admin.Controllers
         
         public ActionResult ApproveComment(int ID)
         {
-            bll.ApproveComment(ID);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            bll.ApproveComment(ID, session);
             return RedirectToAction("UnapprovedComments", "Comment");
         }
         public ActionResult ApproveComment2(int ID)
         {
-            bll.ApproveComment(ID);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            bll.ApproveComment(ID, session);
             return RedirectToAction("AllComments", "Comment");
         }
         
         public JsonResult DeleteComment(int ID)
         {
-            bll.DeleteComment(ID);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            bll.DeleteComment(ID, session);
             return Json("");
         }
     }

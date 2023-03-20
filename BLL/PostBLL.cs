@@ -8,7 +8,7 @@ namespace BLL
     public class PostBLL
     {
         PostDAO dao = new PostDAO();
-        public bool AddPost(PostDTO model)
+        public bool AddPost(PostDTO model, SessionDTO session)
         {
             Post post = new Post();
             post.Title = model.Title;
@@ -23,17 +23,17 @@ namespace BLL
             post.SeoLink = SeoLink.GenerateUrl(model.Title);
             post.LanguageName = model.Language;
             post.AddDate = DateTime.Now;
-            post.AddUserID = UserStatic.UserID;
-            post.LastUpdateUserID = UserStatic.UserID;
+            post.AddUserID = session.UserID;
+            post.LastUpdateUserID = session.UserID;
             post.LastUpdateDate = DateTime.Now;
             int ID = dao.AddPost(post);
-            LogDAO.AddLog(General.ProcessType.PostAdd, General.TableName.Post, ID);
-            SavePostImage(model.PostImages, ID);
-            AddTag(model.TagText, ID);
+            LogDAO.AddLog(General.ProcessType.PostAdd, General.TableName.Post, ID, session);
+            SavePostImage(model.PostImages, ID, session);
+            AddTag(model.TagText, ID, session);
             return true;
         }
 
-        private void AddTag(string tTagText, int PostID)
+        private void AddTag(string tTagText, int PostID, SessionDTO session)
         {
             string[] tags;
             tags = tTagText.Split(',');
@@ -45,7 +45,7 @@ namespace BLL
                     TagContent = item,
                     PostID = PostID,
                     AddDate = DateTime.Now,
-                    LastUpdateUserID = UserStatic.UserID,
+                    LastUpdateUserID = session.UserID,
                     LastUpdateDate = DateTime.Now,
                 });
             }
@@ -53,11 +53,11 @@ namespace BLL
             foreach (var item in taglist)
             {
                 int tagID = dao.AddTag(item);
-                LogDAO.AddLog(General.ProcessType.TagAdd, General.TableName.Tag, tagID);
+                LogDAO.AddLog(General.ProcessType.TagAdd, General.TableName.Tag, tagID, session);
             }
         }
 
-        void SavePostImage(List<PostImageDTO> list, int PostID)
+        void SavePostImage(List<PostImageDTO> list, int PostID, SessionDTO session)
         {
             List<PostImage> imagelist = new List<PostImage>();
             foreach (var item in list)
@@ -67,7 +67,7 @@ namespace BLL
                     ImagePath = item.ImagePath,
                     PostID = PostID,
                     AddDate = DateTime.Now,
-                    LastUpdateUserID = UserStatic.UserID,
+                    LastUpdateUserID = session.UserID,
                     LastUpdateDate = DateTime.Now,
                 });
             }
@@ -75,7 +75,7 @@ namespace BLL
             foreach (var item in imagelist)
             {
                 int imageID = dao.AddImage(item);
-                LogDAO.AddLog(General.ProcessType.ImageAdd, General.TableName.Image, imageID);
+                LogDAO.AddLog(General.ProcessType.ImageAdd, General.TableName.Image, imageID, session);
             }
         }
 
@@ -99,32 +99,32 @@ namespace BLL
             return dto;
         }
 
-        public bool UpdatePost(PostDTO model)
+        public bool UpdatePost(PostDTO model, SessionDTO session)
         {
             model.SeoLink = SeoLink.GenerateUrl(model.Title);
             dao.UpdatePost(model);
-            LogDAO.AddLog(General.ProcessType.AdsAdd, General.TableName.Post, model.ID);
+            LogDAO.AddLog(General.ProcessType.AdsAdd, General.TableName.Post, model.ID, session);
             if (model.PostImages != null)
             {
-                SavePostImage(model.PostImages, model.ID);
+                SavePostImage(model.PostImages, model.ID, session);
             }
 
             dao.DeleteTags(model.ID);
-            AddTag(model.TagText, model.ID);
+            AddTag(model.TagText, model.ID, session);
             return true;
         }
 
-        public string DeletePostImage(int id)
+        public string DeletePostImage(int id, SessionDTO session)
         {
             string imagepath = dao.DeletePostImage(id);
-            LogDAO.AddLog(General.ProcessType.ImageDelete, General.TableName.Image, id);
+            LogDAO.AddLog(General.ProcessType.ImageDelete, General.TableName.Image, id, session);
             return imagepath;
         }
 
-        public List<PostImageDTO> DeletePost(int id)
+        public List<PostImageDTO> DeletePost(int id, SessionDTO session)
         {
             List<PostImageDTO> imagelist = dao.DeletePost(id);
-            LogDAO.AddLog(General.ProcessType.PostDelete, General.TableName.Post, id);
+            LogDAO.AddLog(General.ProcessType.PostDelete, General.TableName.Post, id, session);
             return imagelist;
         }
 
@@ -145,16 +145,16 @@ namespace BLL
             return dao.GetComments();
         }
 
-        public void ApproveComment(int id)
+        public void ApproveComment(int id, SessionDTO session)
         {
             dao.ApproveComment(id);
-            LogDAO.AddLog(General.ProcessType.CommentApprove, General.TableName.Comment, id);
+            LogDAO.AddLog(General.ProcessType.CommentApprove, General.TableName.Comment, id, session);
         }
 
-        public void DeleteComment(int id)
+        public void DeleteComment(int id, SessionDTO session)
         {
             dao.DeleteComment(id);
-            LogDAO.AddLog(General.ProcessType.CommentDelete, General.TableName.Comment, id);
+            LogDAO.AddLog(General.ProcessType.CommentDelete, General.TableName.Comment, id, session);
         }
 
         public List<CommentDTO> GetAllComments()

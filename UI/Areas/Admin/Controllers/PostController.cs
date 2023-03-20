@@ -45,6 +45,7 @@ namespace UI.Areas.Admin.Controllers
             }
             else if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 foreach (var item in model.PostImage)
                 {
                     Bitmap image = new Bitmap(item.InputStream);
@@ -71,7 +72,7 @@ namespace UI.Areas.Admin.Controllers
                 }
 
                 model.PostImages = imagelist;
-                if (bll.AddPost(model))
+                if (bll.AddPost(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
@@ -107,6 +108,7 @@ namespace UI.Areas.Admin.Controllers
             IEnumerable<SelectListItem> selectlist = CategoryBLL.GetCategoriesForDropdown();
             if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 if (model.PostImage[0] != null)
                 {
                     foreach (var item in model.PostImage)
@@ -136,7 +138,7 @@ namespace UI.Areas.Admin.Controllers
                     model.PostImages = imagelist;
                 }
 
-                if (bll.UpdatePost(model))
+                if (bll.UpdatePost(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.UpdateSuccess;
                 }
@@ -158,7 +160,8 @@ namespace UI.Areas.Admin.Controllers
         
         public JsonResult DeletePostImage(int id)
         {
-            string imagePath = bll.DeletePostImage(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            string imagePath = bll.DeletePostImage(id, session);
             string oldPath = Server.MapPath("~/Areas/Admin/Content/PostImage/" + imagePath);
             if (System.IO.File.Exists(oldPath))
             {
@@ -169,7 +172,8 @@ namespace UI.Areas.Admin.Controllers
         
         public JsonResult DeletePost(int id)
         {
-            List<PostImageDTO> imagelist =  bll.DeletePost(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            List<PostImageDTO> imagelist =  bll.DeletePost(id, session);
             foreach (var item in imagelist)
             {
                 string oldPath = Server.MapPath("~/Areas/Admin/Content/PostImage/" + item.ImagePath);

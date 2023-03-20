@@ -30,7 +30,8 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bll.AddAddress(model))
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                if (bll.AddAddress(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
@@ -63,7 +64,8 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bll.UpdateAddress(model))
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                if (bll.UpdateAddress(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.UpdateSuccess;
                 }
@@ -82,7 +84,8 @@ namespace UI.Areas.Admin.Controllers
 
         public JsonResult DeleteAddress(int id)
         {
-            bll.DeleteAddress(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            bll.DeleteAddress(id, session);
             return Json("");
         }
     }

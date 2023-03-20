@@ -76,6 +76,7 @@
         <Compile Include="PostDTO.cs" />
         <Compile Include="PostImageDTO.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="SessionDTO.cs" />
         <Compile Include="SocialMediaDTO.cs" />
         <Compile Include="TagDTO.cs" />
         <Compile Include="UserDTO.cs" />

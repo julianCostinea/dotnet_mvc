@@ -35,6 +35,7 @@ namespace UI.Areas.Admin.Controllers
             }
             else if (ModelState.IsValid)
             {
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
                 HttpPostedFileBase postedFile = model.UserImage;
                 string fileName = "";
                 Bitmap UserImage = new Bitmap(postedFile.InputStream);
@@ -46,7 +47,7 @@ namespace UI.Areas.Admin.Controllers
                     string path = Server.MapPath("~/Areas/Admin/Content/UserImages/" + fileName);
                     resizedImage.Save(path);
                     model.Imagepath = fileName;
-                    bll.AddUser(model);
+                    bll.AddUser(model, session);
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
                     model = new UserDTO();
@@ -96,7 +97,8 @@ namespace UI.Areas.Admin.Controllers
                     }
                 }
 
-                string oldImagePath = bll.UpdateUser(model);
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                string oldImagePath = bll.UpdateUser(model, session);
                 if (model.UserImage != null)
                 {
                     string oldPath = Server.MapPath("~/Areas/Admin/Content/UserImages/" + oldImagePath);
@@ -113,7 +115,8 @@ namespace UI.Areas.Admin.Controllers
         
         public JsonResult DeleteUser(int id)
         {
-            string oldImagePath = bll.DeleteUser(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            string oldImagePath = bll.DeleteUser(id, session);
             string oldPath = Server.MapPath("~/Areas/Admin/Content/UserImages/" + oldImagePath);
             if (System.IO.File.Exists(oldPath))
             {

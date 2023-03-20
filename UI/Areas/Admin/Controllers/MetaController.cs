@@ -26,7 +26,8 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bll.AddMeta(model))
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                if (bll.AddMeta(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                     ModelState.Clear();
@@ -64,7 +65,8 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bll.UpdateMeta(model))
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                if (bll.UpdateMeta(model, session))
                 {
                     ViewBag.ProcessState = General.Messages.UpdateSuccess;
                     ModelState.Clear();
@@ -85,7 +87,8 @@ namespace UI.Areas.Admin.Controllers
 
         public JsonResult DeleteMeta(int ID)
         {
-            bll.DeleteMeta(ID);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            bll.DeleteMeta(ID, session);
             return Json("");
         }
     }

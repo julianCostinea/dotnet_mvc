@@ -16,7 +16,9 @@ namespace UI.Areas.Admin.Models.Attributes
             // {
             //     filterContext.HttpContext.Response.Redirect("/Admin/Login/Index");
             // }
-            if (UserStatic.UserID == 0)
+            var ctx = filterContext.HttpContext;
+            SessionDTO session = (SessionDTO) ctx.Session["UserInfo"];
+            if (session == null || session.UserID == 0)
             {
                 filterContext.HttpContext.Response.Redirect("/Admin/Login/Index");
             }

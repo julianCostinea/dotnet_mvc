@@ -61,7 +61,25 @@ namespace DAL
             List<PostDTO> dtolist = new List<PostDTO>();
             using (POSTDATAEntities db = new POSTDATAEntities())
             {
-                var postlist = (from p in db.Posts.Where(x => x.isDeleted == 0)
+                // var postlist = (from p in db.Posts.Where(x => x.isDeleted == 0)
+                //     join c in db.Categories on p.CategoryID equals c.ID
+                //     select new PostDTO()
+                //     {
+                //         ID = p.ID,
+                //         Title = p.Title,
+                //         CategoryName = c.CategoryName,
+                //         AddDate = p.AddDate,
+                //     }).ToList();
+                // foreach (var item in postlist)
+                // {
+                //     PostDTO dto = new PostDTO();
+                //     dto.ID = item.ID;
+                //     dto.Title = item.Title;
+                //     dto.CategoryName = item.CategoryName;
+                //     dto.AddDate = item.AddDate;
+                //     dtolist.Add(dto);
+                // }
+                List<PostDTO> postlist = (from p in db.Posts.Where(x => x.isDeleted == 0)
                     join c in db.Categories on p.CategoryID equals c.ID
                     select new PostDTO()
                     {
@@ -69,16 +87,13 @@ namespace DAL
                         Title = p.Title,
                         CategoryName = c.CategoryName,
                         AddDate = p.AddDate,
-                    }).ToList();
-                foreach (var item in postlist)
+                    }).Select(x => new PostDTO()
                 {
-                    PostDTO dto = new PostDTO();
-                    dto.ID = item.ID;
-                    dto.Title = item.Title;
-                    dto.CategoryName = item.CategoryName;
-                    dto.AddDate = item.AddDate;
-                    dtolist.Add(dto);
-                }
+                    ID = x.ID,
+                    Title = x.Title,
+                    CategoryName = x.CategoryName,
+                    AddDate = x.AddDate,
+                }).ToList();
             }
 
             return dtolist;
@@ -338,7 +353,7 @@ namespace DAL
             List<CommentDTO> dtolist = new List<CommentDTO>();
             using (POSTDATAEntities db = new POSTDATAEntities())
             {
-                var list = (from c in db.Comments.Where(x => x.isDeleted == false)
+                List<CommentDTO> list = (from c in db.Comments.Where(x => x.isDeleted == false)
                     join p in db.Posts on c.PostID equals p.ID
                     select new
                     {
@@ -348,18 +363,26 @@ namespace DAL
                         Content = c.CommentContent,
                         AddDate = c.AddDate,
                         isapproved = c.isApproved
-                    }).ToList();
-                foreach (var item in list)
+                    }).Select(x => new CommentDTO()
                 {
-                    CommentDTO dto = new CommentDTO();
-                    dto.ID = item.ID;
-                    dto.PostTitle = item.PostTitle;
-                    dto.Email = item.Email;
-                    dto.CommentContent = item.Content;
-                    dto.AddDate = item.AddDate;
-                    dto.isApproved = item.isapproved;
-                    dtolist.Add(dto);
-                }
+                    ID = x.ID,
+                    PostTitle = x.PostTitle,
+                    Email = x.Email,
+                    CommentContent = x.Content,
+                    AddDate = x.AddDate,
+                    isApproved = x.isapproved
+                }).ToList();
+                // foreach (var item in list)
+                // {
+                //     CommentDTO dto = new CommentDTO();
+                //     dto.ID = item.ID;
+                //     dto.PostTitle = item.PostTitle;
+                //     dto.Email = item.Email;
+                //     dto.CommentContent = item.Content;
+                //     dto.AddDate = item.AddDate;
+                //     dto.isApproved = item.isapproved;
+                //     dtolist.Add(dto);
+                // }
             }
 
             return dtolist;

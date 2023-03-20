@@ -7,7 +7,7 @@ namespace BLL
     public class AddressBLL
     {
         AddressDAO dao = new AddressDAO();
-        public bool AddAddress(AddressDTO model)
+        public bool AddAddress(AddressDTO model, SessionDTO session)
         {
             Address ads = new Address();
             ads.Address1 = model.AddressContent;
@@ -19,9 +19,9 @@ namespace BLL
             ads.MapPathSmall = model.SmallMapPath;
             ads.AddDate = System.DateTime.Now;
             ads.LastUpdateDate = System.DateTime.Now;
-            ads.LastUpdateUserID = UserStatic.UserID;
+            ads.LastUpdateUserID = session.UserID;
             int ID = dao.AddAddress(ads);
-            LogDAO.AddLog(General.ProcessType.AddressAdd, General.TableName.Address, ID);
+            LogDAO.AddLog(General.ProcessType.AddressAdd, General.TableName.Address, ID, session);
             return true;
         }
 
@@ -30,17 +30,17 @@ namespace BLL
             return dao.GetAddresses();
         }
 
-        public bool UpdateAddress(AddressDTO model)
+        public bool UpdateAddress(AddressDTO model, SessionDTO session)
         {
-            dao.UpdateAddress(model);
-            LogDAO.AddLog(General.ProcessType.AddressUpdate, General.TableName.Address, model.ID);
+            dao.UpdateAddress(model, session);
+            LogDAO.AddLog(General.ProcessType.AddressUpdate, General.TableName.Address, model.ID, session);
             return true;
         }
 
-        public void DeleteAddress(int id)
+        public void DeleteAddress(int id, SessionDTO session)
         {
-            dao.DeleteAddress(id);
-            LogDAO.AddLog(General.ProcessType.AddressDelete, General.TableName.Address, id);
+            dao.DeleteAddress(id, session);
+            LogDAO.AddLog(General.ProcessType.AddressDelete, General.TableName.Address, id, session);
         }
     }
 }

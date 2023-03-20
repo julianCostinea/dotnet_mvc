@@ -27,7 +27,8 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bll.AddCategory(dto))
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                if (bll.AddCategory(dto, session))
                 {
                     ViewBag.ProcessState = General.Messages.AddSuccess;
                 }
@@ -53,7 +54,8 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bll.UpdateCategory(dto))
+                SessionDTO session = (SessionDTO)Session["UserInfo"];
+                if (bll.UpdateCategory(dto, session))
                 {
                     ViewBag.ProcessState = General.Messages.UpdateSuccess;
                 }
@@ -70,7 +72,8 @@ namespace UI.Areas.Admin.Controllers
 
         public JsonResult DeleteCategory(int id)
         {
-            List<PostImageDTO> postimagelist = bll.DeleteCategory(id);
+            SessionDTO session = (SessionDTO)Session["UserInfo"];
+            List<PostImageDTO> postimagelist = bll.DeleteCategory(id, session);
             foreach (var item in postimagelist)
             {
                 string oldPath = Server.MapPath("~/Areas/Admin/Content/PostImage/" + item.ImagePath);

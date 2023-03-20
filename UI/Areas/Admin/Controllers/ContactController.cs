@@ -25,19 +25,22 @@ namespace UI.Areas.Admin.Controllers
         
         public ActionResult ReadMessage2(int id)
         {
-            bll.ReadMessage(id);
+            SessionDTO session = (SessionDTO) Session["UserInfo"];
+            bll.ReadMessage(id, session);
             return RedirectToAction("AllMessages");
         }
         
         public ActionResult ReadMessage(int id)
         {
-            bll.ReadMessage(id);
+            SessionDTO session = (SessionDTO) Session["UserInfo"];
+            bll.ReadMessage(id, session);
             return RedirectToAction("UnreadMessages");
         }
         
         public JsonResult DeleteMessage(int id)
         {
-            bll.DeleteMessage(id);
+            SessionDTO session = (SessionDTO) Session["UserInfo"];
+            bll.DeleteMessage(id, session);
             return Json("");
         }
     }

@@ -9,16 +9,16 @@ namespace BLL
     {
         MetaDAO dao = new MetaDAO();
 
-        public bool AddMeta(MetaDTO model)
+        public bool AddMeta(MetaDTO model, SessionDTO session)
         {
             Meta meta = new Meta();
             meta.Name = model.Name;
             meta.MetaContent = model.MetaContent;
             meta.AddDate = DateTime.Now;
             meta.LastUpdateDate = DateTime.Now;
-            meta.LastUpdateUserID= UserStatic.UserID;
+            meta.LastUpdateUserID= session.UserID;
             int MetaID = dao.AddMeta(meta);
-            LogDAO.AddLog(General.ProcessType.MetaAdd, General.TableName.Meta, MetaID);
+            LogDAO.AddLog(General.ProcessType.MetaAdd, General.TableName.Meta, MetaID, session);
             return true;
         }
 
@@ -36,17 +36,17 @@ namespace BLL
             return metadto;
         }
 
-        public bool UpdateMeta(MetaDTO model)
+        public bool UpdateMeta(MetaDTO model, SessionDTO session)
         {
             dao.UpdateMeta(model);
-            LogDAO.AddLog(General.ProcessType.MetaUpdate, General.TableName.Meta, model.MetaID);
+            LogDAO.AddLog(General.ProcessType.MetaUpdate, General.TableName.Meta, model.MetaID, session);
             return true;
         }
 
-        public void DeleteMeta(int id)
+        public void DeleteMeta(int id, SessionDTO session)
         {
             dao.DeleteMeta(id);
-            LogDAO.AddLog(General.ProcessType.MetaDelete, General.TableName.Meta, id);
+            LogDAO.AddLog(General.ProcessType.MetaDelete, General.TableName.Meta, id, session);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace BLL
     {
         VideoDAO dao = new VideoDAO();
 
-        public bool AddVideo(VideoDTO model)
+        public bool AddVideo(VideoDTO model, SessionDTO session)
         {
             Video video = new Video();
             video.VideoPath = model.VideoPath;
@@ -17,9 +17,9 @@ namespace BLL
             video.Title = model.Title;
             video.AddDate = DateTime.Now;
             video.LastUpdateDate = DateTime.Now;
-            video.LastUpdateUserID = UserStatic.UserID;
+            video.LastUpdateUserID = session.UserID;
             int ID = dao.AddVideo(video);
-            LogDAO.AddLog(General.ProcessType.VideoAdd, General.TableName.Video, ID);
+            LogDAO.AddLog(General.ProcessType.VideoAdd, General.TableName.Video, ID, session);
             return true;
         }
 
@@ -33,17 +33,17 @@ namespace BLL
             return dao.GetVideoWithID(id);
         }
 
-        public bool UpdateVideo(VideoDTO model)
+        public bool UpdateVideo(VideoDTO model, SessionDTO session)
         {
-            dao.UpdateVideo(model);
-            LogDAO.AddLog(General.ProcessType.VideoUpdate, General.TableName.Video, model.ID);
+            dao.UpdateVideo(model, session);
+            LogDAO.AddLog(General.ProcessType.VideoUpdate, General.TableName.Video, model.ID, session);
             return true;
         }
 
-        public void DeleteVideo(int id)
+        public void DeleteVideo(int id, SessionDTO session)
         {
-            dao.DeleteVideo(id);
-            LogDAO.AddLog(General.ProcessType.VideoDelete, General.TableName.Video, id);
+            dao.DeleteVideo(id, session);
+            LogDAO.AddLog(General.ProcessType.VideoDelete, General.TableName.Video, id, session);
         }
     }
 }
